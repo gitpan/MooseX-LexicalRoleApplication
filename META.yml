@@ -1,0 +1,16 @@
+---
+abstract: 'Apply roles for a lexical scope only'
+author:
+  - 'Florian Ragwitz <rafl@debian.org>'
+generated_by: 'Dist::Zilla version 1.092680'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: MooseX-LexicalRoleApplication
+requires:
+  Moose: 0
+  Scope::Guard: 0
+  Task::Weaken: 0
+  namespace::clean: 0
+version: 0.01
