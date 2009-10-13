@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package MooseX::LexicalRoleApplication;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 # ABSTRACT: Apply roles for a lexical scope only
@@ -61,7 +61,7 @@ MooseX::LexicalRoleApplication - Apply roles for a lexical scope only
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
