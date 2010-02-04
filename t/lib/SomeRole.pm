@@ -1,7 +1,5 @@
 package SomeRole;
-our $VERSION = '0.02';
-
-
+our $VERSION = '0.03';
 
 use Moose::Role;
 use namespace::autoclean;

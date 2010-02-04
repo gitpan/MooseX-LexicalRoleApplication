@@ -2,35 +2,11 @@ use strict;
 use warnings;
 
 package MooseX::LexicalRoleApplication;
-our $VERSION = '0.02';
-
-
+our $VERSION = '0.03';
 # ABSTRACT: Apply roles for a lexical scope only
 
 use Scope::Guard;
 use Scalar::Util 'blessed';
-
-# can't use $meta->rebless_instance, because that demands the new class to be a
-# subclass of the current one.
-sub rebless_instance_back {
-    my ($original_meta, $instance) = @_;
-
-    my $old_meta = Class::MOP::class_of($instance);
-    $old_meta->rebless_instance_away($instance, $original_meta);
-
-    my $meta_instance = $original_meta->get_meta_instance;
-
-    # $_[1] because of some bug in old perls
-    $meta_instance->rebless_instance_structure($_[1], $original_meta);
-
-    for my $attr ($old_meta->get_all_attributes) {
-        next if $original_meta->has_attribute($attr->name);
-        $meta_instance->deinitialize_slot($instance, $_)
-            for $attr->slots;
-    }
-
-    return $instance;
-}
 
 use namespace::clean;
 
@@ -45,14 +21,13 @@ sub apply {
     ));
 
     return Scope::Guard->new(sub {
-        rebless_instance_back($previous_metaclass, $instance);
+        $previous_metaclass->rebless_instance_back($instance);
     });
 }
 
 1;
 
 __END__
-
 =pod
 
 =head1 NAME
@@ -61,7 +36,7 @@ MooseX::LexicalRoleApplication - Apply roles for a lexical scope only
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
@@ -102,19 +77,16 @@ want C<$role> to be applied to C<$instance>. You can cancel role removal by
 calling C<dismiss> on the returned scope guard. If you want to remove the role
 immediately, you can simply undef the guard.
 
-
-
 =head1 AUTHOR
 
-  Florian Ragwitz <rafl@debian.org>
+Florian Ragwitz <rafl@debian.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2009 by Florian Ragwitz.
+This software is copyright (c) 2010 by Florian Ragwitz.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-=cut 
-
+=cut
 

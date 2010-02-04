@@ -1,7 +1,5 @@
 package SomeClass;
-our $VERSION = '0.02';
-
-
+our $VERSION = '0.03';
 
 use Moose;
 use namespace::autoclean;
